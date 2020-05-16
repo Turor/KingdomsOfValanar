@@ -37,6 +37,8 @@ public class Unit {
 	private ResourcePackage cost;
 	private ResourcePackage upkeep;
 	
+	private Set<Tile> vision;
+	
 	
 	public Unit(UnitEquipment equipment, UnitRace race, UnitType type, LinkedList<UnitTraits> traits, 
 			UnitExperience experience, UnitSize size) throws RuntimeException {

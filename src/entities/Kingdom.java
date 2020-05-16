@@ -32,6 +32,10 @@ public class Kingdom {
 	
 	private LinkedList<Unit> units;
 	
+	private Set<Tile> vision;
+	
+	private LinkedList<Building> buildings;
+	
 	
 	/**
 	 * Initialize a Kingdom
@@ -48,6 +52,7 @@ public class Kingdom {
 		this.name = "" + name;
 		this.description = ""+description;
 		units = new LinkedList<Unit>();
+		vision = new HashSet<Tile>();
 	}
 	
 	public ResourcePackage getAvailableResources() {
@@ -64,7 +69,22 @@ public class Kingdom {
 	}
 	
 	
+	//Triggered when some vision changes, recomputation of the whole line of sight map required
+	public void updateVision() {
+		
+		vision = new HashSet<Tile>();
 	
+		for(Unit u : units) {//For each unit in units
+			
+			
+		}
+		
+		for(Building b: buildings) {//For each building in buildings
+			if(b.providesVision()) {
+				
+			}	
+		}
+	}
 	
 	
 

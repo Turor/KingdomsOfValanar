@@ -11,7 +11,7 @@ public class Tile {
 	
 	private Kingdom operator;
 	
-	private Set<Tile> adjacencies;
+	private Set<Connection> adjacencies;
 	
 	private Set<Kingdom> recruitmentRights;
 	
@@ -35,6 +35,8 @@ public class Tile {
 		// TODO Auto-generated method stub
 		return new HashSet<Kingdom>(buildingRights);
 	}
+	
+	public void addAdjacency(Tile newAdjacency,)
 	
 	
 

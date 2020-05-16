@@ -75,7 +75,7 @@ public class Connection {
 	}
 	
 	/**
-	 * Updates the cost by some factor
+	 * Updates the connection "edge" cost for Djikstra
 	 * The addition of a road might reduce this, or an improvement in portal infrastructure might impact it
 	 * @param factor
 	 */
