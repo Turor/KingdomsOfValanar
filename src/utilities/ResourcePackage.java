@@ -1,6 +1,8 @@
 package utilities;
 
 public class ResourcePackage {
+	
+	//Enumerator stating flat or multiplicative.
 
 	public double population;
 	public double food;

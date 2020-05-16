@@ -26,6 +26,10 @@ public class Tile {
 		// TODO Auto-generated method stub
 		return owner;
 	}
+	
+	public Kingdom getOperator() {
+		return operator;
+	}
 
 	public Set<Kingdom> getBuildingRights() {
 		// TODO Auto-generated method stub
