@@ -1,169 +1,85 @@
 package utilities;
 
+//import java.util.HashSet;
+import java.util.List;
+//import java.util.Set;
+
 public class ResourcePackage {
 	
-	//Enumerator stating flat or multiplicative.
-
-	public double population;
-	public double food;
-	public double wood;
-	public double metal;
-	public double gold;
+	private double[] resources;
 	
-	public double arcane;
-	public double divine;
-	public double nature;
-	public double alchemy;
-	public double enchanting;
-	public double courtMagic;
+	//private Set<ResourceTypes> affected;
 	
-	public double happinessCounter;
-	public double happiness;
+	public final PackageType type;
 	
-	/**
-	 * First initialization
-	 * @param population
-	 * @param food
-	 * @param metal
-	 * @param wood
-	 * @param gold
-	 * @param arcane
-	 * @param divine
-	 * @param nature
-	 * @param alchemy
-	 * @param enchanting
-	 * @param courtMagic
-	 * @param happinessCounter
-	 * @param happiness
-	 */
-	public ResourcePackage(double population, double food, double metal, double wood, double gold, double arcane, double divine, 
-							double nature, double alchemy, double enchanting, double courtMagic, double happinessCounter, double happiness) {
-		this.population = population;
-		this.food = food;
-		this.metal = metal;
-		this.wood = wood;
-		this.gold = gold;
-		this.arcane = arcane;
-		this.divine = divine;
-		this.nature = nature;
-		this.alchemy = alchemy;
-		this.enchanting = enchanting;
-		this.courtMagic = courtMagic;
-		this.happinessCounter = happinessCounter;
-		this.happiness = happiness;
+	public ResourcePackage(PackageType type, List<ResourcePair> source) {
+		this.resources = new double[ResourceTypes.count()];
+		//affected = new HashSet<ResourceTypes>();
+		for(ResourcePair pair : source) {
+			resources[pair.type.getDbValue()] = pair.quantity;
+			//affected.add(pair.type);
+		}
+		this.type=type;
+	}
+	
+	public ResourcePackage(ResourcePackage source) {
+		type = source.type;
+		resources = source.getResources();
 	}
 	
 	public ResourcePackage() {
-		population = 0;
-		food = 0;
-		metal = 0;
-		wood = 0;
-		gold = 0;
-		arcane = 0;
-		divine = 0;
-		nature = 0;
-		alchemy = 0;
-		enchanting = 0;
-		courtMagic = 0;
-		happinessCounter = 0;
-		happiness = 0;
+		resources = new double[ResourceTypes.count()];
+		type = PackageType.flat;
 	}
 	
-	public ResourcePackage(ResourcePackage resources) {
-		population = resources.population;
-		food = resources.food;
-		metal = resources.metal;
-		wood = resources.wood;
-		gold = resources.gold;
-		arcane = resources.arcane;
-		divine = resources.divine;
-		nature = resources.nature;
-		alchemy = resources.alchemy;
-		enchanting = resources.enchanting;
-		courtMagic = resources.courtMagic;
-		happinessCounter = resources.happinessCounter;
-		happiness = resources.happiness;
+	public void add(ResourceTypes type, double amount) {
+		resources[type.getDbValue()]+=amount;
 	}
 	
+	public void addPackage(ResourcePackage source) {
+		double[] other = source.getResources();
+		for(int i = 0 ; i < other.length;i++)
+			resources[i] += other[i];
+	}
 	
-	public void add(ResourcePackage resources) {
-		population += resources.population;
-		food += resources.food;
-		metal += resources.metal;
-		wood += resources.wood;
-		gold += resources.gold;
-		arcane += resources.arcane;
-		divine += resources.divine;
-		nature += resources.nature;
-		alchemy += resources.alchemy;
-		enchanting += resources.enchanting;
-		courtMagic += resources.courtMagic;
-		happinessCounter += resources.happinessCounter;
-		happiness += resources.happiness;
+	public void multiplication(ResourcePackage source) {
+		double[] other = source.getResources();
+		for(int i = 0; i < other.length; i++) {
+			resources[i]*=other[i];
+		}
 	}
 	
 	public void scalarMultiplication(double scalar) {
-		population *= scalar;
-		food *= scalar;
-		metal *= scalar;
-		wood *= scalar;
-		gold *= scalar;
-		arcane *= scalar;
-		divine *= scalar;
-		nature *= scalar;
-		alchemy *= scalar;
-		enchanting *= scalar;
-		courtMagic *= scalar;
-		happinessCounter *= scalar;
-		happiness *= scalar;
+		for(int i = 0; i < resources.length;i++) {
+			resources[i]*=scalar;
+		}
 	}
 	
-	public void multiplication(ResourcePackage scalar) {
-		population *= scalar.population;
-		food *= scalar.food;
-		metal *= scalar.metal;
-		wood *= scalar.wood;
-		gold *= scalar.gold;
-		arcane *= scalar.arcane;
-		divine *= scalar.divine;
-		nature *= scalar.nature;
-		alchemy *= scalar.alchemy;
-		enchanting *= scalar.enchanting;
-		courtMagic *= scalar.courtMagic;
-		happinessCounter *= scalar.happinessCounter;
-		happiness *= scalar.happiness;
+	public double[] getResources() {
+		return resources.clone();
 	}
 	
-	public boolean sufficientResources(ResourcePackage spending) {
-		if(population-spending.population <0)
-			return false;
-		else if(food-spending.food < 0)
-			return false;
-		else if(metal-spending.metal < 0)
-			return false;
-		else if(wood-spending.wood < 0)
-			return false;
-		else if(gold-spending.gold < 0)
-			return false;
-		else if(arcane-spending.arcane<0)
-			return false;
-		else if(divine-spending.divine<0)
-			return false;
-		else if(nature-spending.nature<0)
-			return false;
-		else if(alchemy-spending.alchemy<0)
-			return false;
-		else if(enchanting-spending.enchanting<0)
-			return false;
-		else if(courtMagic-spending.courtMagic<0)
-			return false;
-		else
-			return true;
+	public double get(ResourceTypes type) {
+		return resources[type.getDbValue()];
+	}
+
+	public boolean sufficientResources(ResourcePackage cost) {
+		double[] costArray = cost.getResources(); //A throws clause which combines all the different resources that were insufficient would be useful as well
+		for(int i = 0; i < resources.length;i++) {
+			if(resources[i]-costArray[i] < 0)
+				return false; //A throws clause would be better here because it could say which resources was insufficient
+				//ResourcesTypes.
+		}
+		return true;
 	}
 	
 	public String toString() {
-		return "Food: "+(int)food+" Metal: " +(int)metal +" Gold: "+ (int) gold+ " Arcane: "+ (int) arcane + " Divine: " + (int) divine
-				+" Nature: " + (int) nature + " Alchemy: " + (int) alchemy + " Enchanting: " + (int) enchanting + " Court Magic: " + (int) courtMagic
-				+" Happiness Counter: " + happinessCounter +" Happiness: " + happiness;
+		String naive = "";
+		for(int i = 0; i < resources.length;i++) {
+			if(resources[i]!= 0)
+				naive += ResourceTypes.fromDbValue(i).toString() + ": " + resources[i] + " ";
+		}
+		return naive;
 	}
+
 }

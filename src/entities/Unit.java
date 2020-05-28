@@ -10,6 +10,7 @@ import utilities.UnitSize;
 import utilities.UnitStatPackage;
 import utilities.MovementClass;
 import utilities.ResourcePackage;
+import utilities.ResourceTypes;
 import utilities.StaticFunctions;
 
 public class Unit {
@@ -66,17 +67,17 @@ public class Unit {
 	
 	private void initializeCost() {
 		cost = new ResourcePackage();
-		cost.add(equipment.getCost());
-		cost.add(race.getCost());
-		cost.add(experience.getCost());
+		cost.addPackage(equipment.getCost());
+		cost.addPackage(race.getCost());
+		cost.addPackage(experience.getCost());
 		cost.multiplication(type.getCost());
 		cost.scalarMultiplication(size.costFactor());
 	}
 	
 	private void initializeUpkeep() {
 		upkeep = new ResourcePackage();
-		upkeep.food = 15;
-		upkeep.gold = cost.gold/10;
+		upkeep.add(ResourceTypes.Food,15);
+		upkeep.add(ResourceTypes.Gold, cost.get(ResourceTypes.Gold)/10);
 	}
 	
 	private void generateStats() {

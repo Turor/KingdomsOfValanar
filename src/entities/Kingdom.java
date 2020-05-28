@@ -1,21 +1,22 @@
 package entities;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
 import technology.Technology;
+import utilities.Description;
 import utilities.ResourcePackage;
 
-public class Kingdom {
+public class Kingdom implements PropertyChangeListener {
 	
-	String name;
-	String description;
+	private Description desc;
 	
+	private ResourcePackage resources; //Resources available in this turn
 	
-	ResourcePackage resources; //Resources available in this turn
-	
-	ResourcePackage availableResources; //Resources available after proposed actions
+	private ResourcePackage availableResources; //Resources available after proposed actions
 	
 	//Public action
 	//Private Action
@@ -44,13 +45,12 @@ public class Kingdom {
 	 * @param startingResources
 	 * @param kingdomTechnology - Set of technology the kingdom starts with
 	 */
-	public Kingdom(String name, String description, ResourcePackage startingResources, Set<Technology> kingdomTechnology) {
+	public Kingdom(Description description, ResourcePackage startingResources, Set<Technology> kingdomTechnology) {
 		unlockedTechnologies = new HashSet<Technology>();
 		unlockedTechnologies.addAll(kingdomTechnology);
 		resources = new ResourcePackage(startingResources);
 		availableResources = new ResourcePackage(resources);
-		this.name = "" + name;
-		this.description = ""+description;
+		desc = new Description(description);
 		units = new LinkedList<Unit>();
 		vision = new HashSet<Tile>();
 	}
@@ -65,7 +65,7 @@ public class Kingdom {
 
 	public String getName() {
 		// TODO Auto-generated method stub
-		return name;
+		return desc.name;
 	}
 	
 	
@@ -84,6 +84,20 @@ public class Kingdom {
 				
 			}	
 		}
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public Description getDescription() {
+		return desc;
+	}
+	
+	public String toString() {
+		return desc.toString();
 	}
 	
 	
