@@ -22,6 +22,14 @@ public class ResourcePackage {
 		this.type=type;
 	}
 	
+	public ResourcePackage(PackageType type) {
+		this.resources = new double[ResourceTypes.count()];
+		this.type=type;
+		for(int i = 0; i < resources.length;i++) {
+			resources[i] = 1;
+		}
+	}
+	
 	public ResourcePackage(ResourcePackage source) {
 		type = source.type;
 		resources = source.getResources();
@@ -47,6 +55,10 @@ public class ResourcePackage {
 		for(int i = 0; i < other.length; i++) {
 			resources[i]*=other[i];
 		}
+	}
+	
+	public void multiply(ResourceTypes type, double amount) {
+		resources[type.getDbValue()]*=amount;
 	}
 	
 	public void scalarMultiplication(double scalar) {
