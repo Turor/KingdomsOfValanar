@@ -11,7 +11,7 @@ import java.util.Set;
 import entities.Kingdom;
 import entities.Tile;
 import technology.Technology;
-import tileModifiers.Terrain;
+import tileModifiers.TerrainTypes;
 import utilities.Description;
 import utilities.PackageType;
 import utilities.ResourcePackage;
@@ -26,26 +26,30 @@ public class KoVModel {
 
 		Kingdom[] kingdoms =loadKingdoms();
 		
-		for(Kingdom k : kingdoms) {
-			System.out.println(k.toString());
-		}
+//		for(Kingdom k : kingdoms) {
+//			System.out.println(k.getDescription().toString() + k.getAvailableResources().toString());
+//		}
 
 
 
-		Terrain[] terrainTypes = loadTerrainTypes();
+//		Terrain[] terrainTypes = loadTerrainTypes();
 //		for(Terrain t : terrainTypes) {
 //			System.out.println(t.toString() + " cost " + t.getDevelopmentCost() + " to develop and "
 //					+ "produces " + t.getProduction() + " per turn once developed.");
 //		}
 
 
-		Tile[][] tiles = loadTiles(terrainTypes);
+		Tile[][] tiles = loadTiles(kingdoms);
 //		for(int i = 0; i < tiles.length;i++) {
 //			for(int j = 0; j < tiles[i].length;j++) {
 //				System.out.print(tiles[i][j].toString());
 //			}
 //			System.out.println();
 //		}
+		
+		for(Kingdom k : kingdoms) {
+			System.out.println(k.getName()+ ":\t" +k.initializeIncome());
+		}
 	}
 
 	private static Kingdom[] loadKingdoms() {
@@ -89,47 +93,47 @@ public class KoVModel {
 	}
 
 
-	private static Terrain[] loadTerrainTypes() {
-		try {
-			File terrainData = new File("../KingdomsOfValanar/initializationResources/TileTypes.csv");
-			FileReader fh = new FileReader(terrainData);
-			BufferedReader fileScanner = new BufferedReader(fh);
+//	private static Terrain[] loadTerrainTypes() {
+//		try {
+//			File terrainData = new File("../KingdomsOfValanar/initializationResources/TileTypes.csv");
+//			FileReader fh = new FileReader(terrainData);
+//			BufferedReader fileScanner = new BufferedReader(fh);
+//
+//			String row;
+//			LinkedList<Terrain> tempList = new LinkedList<Terrain>();
+//			while((row = fileScanner.readLine())!= null) {
+//				String[] data = row.split(",");
+//				String terrainName = data[0];
+//				int movementCost = Integer.parseInt(data[1]);
+//				ResourcePackage production = new ResourcePackage();
+//				ResourcePackage cost = new ResourcePackage();
+//				production.add(ResourceTypes.Food, Double.parseDouble(data[2]));
+//				production.add(ResourceTypes.Metal,Double.parseDouble(data[3]));
+//				production.add(ResourceTypes.Wood,Double.parseDouble(data[4]));
+//				production.add(ResourceTypes.Gold,Double.parseDouble(data[5]));
+//				cost.add(ResourceTypes.Metal,Double.parseDouble(data[6]));
+//				cost.add(ResourceTypes.Wood,Double.parseDouble(data[7]));
+//				cost.add(ResourceTypes.Gold,Double.parseDouble(data[8]));
+//				cost.add(ResourceTypes.Population, Double.parseDouble(data[9]));
+//				int importID = Integer.parseInt(data[10]);
+//				Terrain t = new Terrain(terrainName,movementCost,cost,production,importID);
+//				tempList.add(t);
+//			}
+//			fileScanner.close();
+//			int length = tempList.size();
+//			Terrain[] terrain = new Terrain[length];
+//			for(Terrain t : tempList) {
+//				terrain[t.importID] = t;
+//			}
+//			return terrain;
+//
+//		}catch(Exception e) {
+//			System.err.println(e.getMessage());
+//		}
+//		return null;
+//	}
 
-			String row;
-			LinkedList<Terrain> tempList = new LinkedList<Terrain>();
-			while((row = fileScanner.readLine())!= null) {
-				String[] data = row.split(",");
-				String terrainName = data[0];
-				int movementCost = Integer.parseInt(data[1]);
-				ResourcePackage production = new ResourcePackage();
-				ResourcePackage cost = new ResourcePackage();
-				production.add(ResourceTypes.Food, Double.parseDouble(data[2]));
-				production.add(ResourceTypes.Metal,Double.parseDouble(data[3]));
-				production.add(ResourceTypes.Wood,Double.parseDouble(data[4]));
-				production.add(ResourceTypes.Gold,Double.parseDouble(data[5]));
-				cost.add(ResourceTypes.Metal,Double.parseDouble(data[6]));
-				cost.add(ResourceTypes.Wood,Double.parseDouble(data[7]));
-				cost.add(ResourceTypes.Gold,Double.parseDouble(data[8]));
-				cost.add(ResourceTypes.Population, Double.parseDouble(data[9]));
-				int importID = Integer.parseInt(data[10]);
-				Terrain t = new Terrain(terrainName,movementCost,cost,production,importID);
-				tempList.add(t);
-			}
-			fileScanner.close();
-			int length = tempList.size();
-			Terrain[] terrain = new Terrain[length];
-			for(Terrain t : tempList) {
-				terrain[t.importID] = t;
-			}
-			return terrain;
-
-		}catch(Exception e) {
-			System.err.println(e.getMessage());
-		}
-		return null;
-	}
-
-	private static Tile[][] loadTiles(Terrain[] terrainTypes) {
+	private static Tile[][] loadTiles(Kingdom[] kingdoms) {
 		try {		
 			File tileData = new File("../KingdomsOfValanar/initializationResources/TileData.csv");
 			FileReader fh = new FileReader(tileData);
@@ -145,8 +149,19 @@ public class KoVModel {
 					for(int column = 0; column < data.length;column++) {
 						String temp = data[column].substring(1, data[column].length()-1);
 						String[] values = temp.split("`");
-						int importID = Integer.parseInt(values[1]);
-						Tile t = new Tile(terrainTypes[importID],row,column);					
+
+						//Match kingdoms with the tiles they operate
+						int i = 0;
+						for(; i < kingdoms.length;i++) {
+							if(kingdoms[i].equals(values[3]))
+								break;
+						}
+						Tile t = new Tile(TerrainTypes.valueOf(values[0]),row,column);
+						if(i < kingdoms.length) {
+							t.changeOperator(kingdoms[i]);
+							kingdoms[i].addOperatedTile(t);
+						}else
+							t.changeOperator(null);
 						tiles.add(t);
 						if(column > maxCol)
 							maxCol = column;

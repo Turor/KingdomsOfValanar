@@ -5,10 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import javafx.scene.shape.Rectangle;
-import technology.Technology;
 import tileModifiers.Connection;
-import tileModifiers.Terrain;
+import tileModifiers.TerrainTypes;
 import utilities.ResourcePackage;
 
 public class Tile {
@@ -30,7 +28,7 @@ public class Tile {
 	
 	private List<Building> buildingsPresent;
 	
-	private Terrain dominantTerrain;
+	private TerrainTypes dominantTerrain;
 	
 	//Potentially the kingdoms with some claim to this tile
 
@@ -62,7 +60,7 @@ public class Tile {
 	 * @param mapCoordinates - The geographical location of this tile, used to place the tile on a map
 	 * @param dominantTerrain - The terrain class to which this tile belongs
 	 */
-	public Tile(Terrain dominantTerrain, int row, int column) {
+	public Tile(TerrainTypes dominantTerrain, int row, int column) {
 		init();
 		owner = null;
 		operator = null;	
@@ -87,7 +85,7 @@ public class Tile {
 		connections.add(newConnection);
 	}
 	
-	public void changeTerrain(Terrain newTerrain) {
+	public void changeTerrain(TerrainTypes newTerrain) {
 		dominantTerrain = newTerrain;
 	}
 	
@@ -119,9 +117,12 @@ public class Tile {
 	public int getColumn() {
 		return this.column;
 	}
+	public TerrainTypes getTerrain() {
+		return dominantTerrain;
+	}
 	
 	public String toString() {
-		return String.format("%9s[%3d,%3d]\t", dominantTerrain.name,row,column);
+		return String.format("%9s[%3d,%3d]\t", dominantTerrain.toString(),row,column);
 	}
 	
 

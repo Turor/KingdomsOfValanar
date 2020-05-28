@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import technology.Technology;
+import tileModifiers.TerrainTypes;
 import utilities.Description;
 import utilities.ResourcePackage;
 
@@ -37,6 +38,12 @@ public class Kingdom implements PropertyChangeListener, Comparable<Kingdom> {
 	
 	private LinkedList<Building> buildings;
 	
+	private Set<Tile> operatedTiles;
+	
+	private Set<Tile> claimedTiles;
+	
+	private int[] tileCounts;
+	
 	//Policies
 	
 	
@@ -55,6 +62,9 @@ public class Kingdom implements PropertyChangeListener, Comparable<Kingdom> {
 		desc = new Description(description);
 		units = new LinkedList<Unit>();
 		vision = new HashSet<Tile>();
+		operatedTiles = new HashSet<Tile>();
+		claimedTiles = new HashSet<Tile>();
+		tileCounts = new int[TerrainTypes.count()];
 	}
 	
 	public ResourcePackage getAvailableResources() {
@@ -70,6 +80,13 @@ public class Kingdom implements PropertyChangeListener, Comparable<Kingdom> {
 		return desc.name;
 	}
 	
+	public void addOperatedTile(Tile newTile) {
+		operatedTiles.add(newTile);
+	}
+	
+	public void addClaimedTile(Tile newTile) {
+		claimedTiles.add(newTile);
+	}
 	
 	//Triggered when some vision changes, recomputation of the whole line of sight map required
 	public void updateVision() {
@@ -103,9 +120,46 @@ public class Kingdom implements PropertyChangeListener, Comparable<Kingdom> {
 		return desc.toString();
 	}
 	
+	public boolean equals(String other) {
+		return this.getName().equals(other);
+	}
+	
 	
 	public int compareTo(Kingdom other) {
 		return this.getName().compareTo(other.getName());
+	}
+	
+	public String printOperatedTiles(){
+		String s = "";
+		for(Tile t : operatedTiles) {
+			s += t.toString();
+		}
+		return s;
+	}
+	
+	public int totalTilesOperated() {
+		return operatedTiles.size();
+	}
+	
+	public ResourcePackage initializeIncome() {
+		ResourcePackage tileProduction = recountResourcesFromTiles();
+		return tileProduction;
+	}
+	
+	private ResourcePackage recountResourcesFromTiles() {
+		ResourcePackage results = new ResourcePackage();
+		for(int i = 0; i < tileCounts.length;i++) {
+			tileCounts[i] = 0;
+		}
+		for(Tile t : operatedTiles) {
+			tileCounts[t.getTerrain().getDbValue()]++;
+		}
+		for(int i = 0; i < tileCounts.length;i++) {
+			ResourcePackage temp = TerrainTypes.fromDbValue(i).getProduction();
+			temp.scalarMultiplication(tileCounts[i]);
+			results.addPackage(temp);			
+		}
+		return results;
 	}
 	
 	

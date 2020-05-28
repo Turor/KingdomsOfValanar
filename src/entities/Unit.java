@@ -8,7 +8,6 @@ import technology.Technology;
 import unitModifiers.*;
 import utilities.UnitSize;
 import utilities.UnitStatPackage;
-import utilities.MovementClass;
 import utilities.ResourcePackage;
 import utilities.ResourceTypes;
 import utilities.StaticFunctions;
@@ -21,7 +20,7 @@ public class Unit {
 	private UnitEquipment equipment;
 	private UnitExperience experience;
 	private UnitRace race;
-	private Set<UnitTraits> traits;
+	private Set<UnitTraits> traits; //TODO trait effect design
 	private UnitType type;
 	
 	
@@ -47,7 +46,8 @@ public class Unit {
 		this.race = race;
 		this.type = type;
 		this.traits = new HashSet<UnitTraits>();
-		traits.addAll(traits);
+		this.traits.addAll(traits);
+		this.traits.addAll(race.getTraits());
 		this.experience = experience;
 		this.size = size;
 		this.initializeCost();
@@ -68,8 +68,11 @@ public class Unit {
 	private void initializeCost() {
 		cost = new ResourcePackage();
 		cost.addPackage(equipment.getCost());
-		cost.addPackage(race.getCost());
-		cost.addPackage(experience.getCost());
+		cost.add(ResourceTypes.Gold,race.cost);
+		cost.add(ResourceTypes.Gold,experience.cost());
+		for(UnitTraits t : traits) {
+			cost.add(ResourceTypes.Gold, t.cost);
+		}
 		cost.multiplication(type.getCost());
 		cost.scalarMultiplication(size.costFactor());
 	}
@@ -85,23 +88,14 @@ public class Unit {
 		stats.add(equipment.getStats());
 		stats.add(race.getStats());
 		stats.add(type.getStats());
-		stats.add(experience.getStats());
-		movementClass = type.getMovementClass();
-		for(UnitTraits trait : traits) {
-			stats.add(trait.getStats());
-		}
+		stats.add(experience.getStatPackage());
+		movementClass = type.movementClass();
 		health = size.health();
 	}
 	
 	private void populateTechnologyRequired() {
 		requiredTech = new HashSet<Technology>();
-		requiredTech.addAll(equipment.getTechnology());
-		requiredTech.addAll(race.getTechnology());
-		requiredTech.addAll(type.getTechnology());
-		requiredTech.addAll(experience.getTechnology());
-		for(UnitTraits trait : traits) {
-			requiredTech.addAll(trait.getTechnology());
-		}
+		//TODO
 	}
 	
 	

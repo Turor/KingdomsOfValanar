@@ -89,7 +89,7 @@ public class ResourcePackage {
 		String naive = "";
 		for(int i = 0; i < resources.length;i++) {
 			if(resources[i]!= 0)
-				naive += ResourceTypes.fromDbValue(i).toString() + ": " + resources[i] + " ";
+				naive += String.format("%s: %d\t", ResourceTypes.fromDbValue(i).toString(),(int)resources[i]);
 		}
 		return naive;
 	}

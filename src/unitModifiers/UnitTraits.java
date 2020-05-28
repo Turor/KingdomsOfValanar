@@ -1,22 +1,28 @@
 package unitModifiers;
 
-public enum UnitTraits {	
-	AMPHIBIOUS,
-	BRED_FOR_WAR,
-	BRUTAL,
-	COURAGEOUS,
-	ETERNAL,
-	FRIENDLY,
-	HORRIFYING,
-	MARTIAL,
-	MINDLESS,
-	REGENERATE,
-	RAVENOUS,
-	ROCK_HURLER,
-	SAVAGE,
-	STALWART,
-	TWISTING_ROOTS,
-	UNDEAD;
+public enum UnitTraits{	
+	AMPHIBIOUS(50),
+	BRED_FOR_WAR(100),
+	BRUTAL(200),
+	COURAGEOUS(50),
+	ETERNAL(50),
+	FRIENDLY(5),
+	HORRIFYING(200),
+	MARTIAL(100),
+	MINDLESS(100),
+	REGENERATE(200),
+	RAVENOUS(50),
+	ROCK_HURLER(250),
+	SAVAGE(50),
+	STALWART(50),
+	TWISTING_ROOTS(200),
+	UNDEAD(50);
+
+	UnitTraits(int cost) {
+		this.cost = cost;
+	}
+	
+	public final int cost;
 
 	public String toName() {
 		switch(this) {
