@@ -1,0 +1,123 @@
+Entities -*-mode:org;-*-
+* Kingdoms
+** Has Claimed Tiles
+** Has Developed Tiles
+** Have Counter Magical Capabilities
+** Have Counter Espionage
+** Have Events Happen to Them
+** Have Storage Capacities
+- Innate storage plus the capacity provided by improvements and maybe technologies
+** Have Resources
+- Resources is the sum of their income and their resources left over from last turn
+** Have Income
+- Income is the composite of all their worked tiles and owned buildings and event surpluses
+** Have Ongoing Events
+- Events that can be dealt with
+** Have Prepared Events
+- prepare for Event Action - Quantity dealt with
+- Permanent Developments
+- A list of events which have been modified, either negated, or multiplied via developments or actions
+** Have contracts
+- Long Term Trade Agreements
+- Operational agreements
+- Defensive Pact
+- Non-agression pact
+** Performs Actions
+*** Public Spending Action
+*** Private Spending Action
+*** Public Action
+*** Private Action
+*** Arcane Magic Action
+*** Divine Magic Action
+*** Nature Magic Action
+*** Alchemy Action
+*** Enchanting Action
+*** Court Magic Action
+
+* Units
+** Have a Race
+** Have experience levels
+** Have a Type(s)
+- Flying
+- Archers
+- Levies
+- Infantry
+- Siege Engine
+- Navy
+** Have an Equipment Class
+** Have a Size
+** Have Health
+** Have an owner
+** Have a location
+** Have a Cost
+-
+** Have upkeep
+** Have a movement class
+** Have national bonuses
+** Have Traits
+- Can be temporary, have to check expiration condition in certain cases, Tiles Traversed
+- Can be permanent but conditional to location
+
+
+
+* Technologies
+** Provide benefits
+** Unlock units and buildings
+* Events
+** Was negated?
+** Event Types
+*** Unit Type Events
+- Movement Type
+- Creation Type
+- Reduce cost of Building Units and unit types
+- Kill unit event (Remove unit from unit List)
+- Give Unit Trait 
+*** Resource Events
+- Must be able to modify every attribute in the game
+*** Development Type Events
+- Free building
+*** Action type Events
+- Prevent Magic Actions
+- Provide free action of a particular type
+** Duration
+* Development
+** Has an operator
+** Has a location
+** Has a development Type(s) which affects it's effects
+- Technology Type
+  - Provides a technology to operators list
+- Defensive Type
+  - Provides combat type benefits to operator's unit within tile
+  - Does it provide vision?
+    - Vision range provided and vision type
+- Production Type
+  - Type of resource benefits
+    - Resources benefitted
+- Storage Type
+ - Resource capacity affected
+- Magical Type
+ - Has a resource affect
+** Affect Resource Production, Resource Capacity, Technology, Vision, Movement Bonuses and Impediments, Combat Benefits and Penalties, Permanent Event Affector
+** Can have a name
+** Can have backstory
+
+* Tiles
+** Has a terrain type
+** Have developments present
+** Owner (Political Borders)
+** Is it developed?
+** Who is working it?
+** Have Units
+** Has adjacency information
+
+* Terrain Type
+** Has a movement cost
+** Has movement classes
+** Base production
+
+* Actions
+
+
+* Game Master
+- Needs to be able to create and affect units anywhere in the map
+

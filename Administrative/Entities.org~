@@ -1,0 +1,16 @@
+Entities -*-mode:org;-*-
+* Kingdoms
+** Claims Tiles
+** Works Tiles
+** Has Counter Magical Capabilities
+** Has Counter Espionage
+** Has Events Happen to Them
+** Has Storage Capacities
+- Innate storage plus the capacity provided by improvements and maybe technologies
+** Has Resources
+- Resources is the sum of their income and their resources left over from last turn
+** Has Income
+- Income is the composite of all their worked tiles and owned buildings and event surpluses
+* Units
+* Technologies
+* Events

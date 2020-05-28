@@ -1,0 +1,15 @@
+Capital: =IMPORTRANGE("https://docs.google.com/spreadsheets/d/1-qyW5FYxU_yh9X-38SEKgN1GkPtAtEoBlwtlPWWSbTo/edit#gid=338801453","LimitedSpyChart!A1:L91")
+
+Mothari: =IMPORTRANGE("https://docs.google.com/spreadsheets/d/1-qyW5FYxU_yh9X-38SEKgN1GkPtAtEoBlwtlPWWSbTo/edit#gid=338801453","LimitedSpyChart!A94:L183")
+
+The Wild Lands: =IMPORTRANGE("https://docs.google.com/spreadsheets/d/1-qyW5FYxU_yh9X-38SEKgN1GkPtAtEoBlwtlPWWSbTo/edit#gid=338801453","LimitedSpyChart!A186:L275")
+
+Lannisport: =IMPORTRANGE("https://docs.google.com/spreadsheets/d/1-qyW5FYxU_yh9X-38SEKgN1GkPtAtEoBlwtlPWWSbTo/edit#gid=338801453","LimitedSpyChart!A370:L459")
+
+Outlands: =IMPORTRANGE("https://docs.google.com/spreadsheets/d/1-qyW5FYxU_yh9X-38SEKgN1GkPtAtEoBlwtlPWWSbTo/edit#gid=338801453","LimitedSpyChart!A462:L551")
+
+Mount Kalistar: =IMPORTRANGE("https://docs.google.com/spreadsheets/d/1-qyW5FYxU_yh9X-38SEKgN1GkPtAtEoBlwtlPWWSbTo/edit#gid=338801453","LimitedSpyChart!A556:L645")
+
+Therondor: =IMPORTRANGE("https://docs.google.com/spreadsheets/d/1-qyW5FYxU_yh9X-38SEKgN1GkPtAtEoBlwtlPWWSbTo/edit#gid=338801453","LimitedSpyChart!648:L737")
+
+Ellea'thara: =IMPORTRANGE("https://docs.google.com/spreadsheets/d/1-qyW5FYxU_yh9X-38SEKgN1GkPtAtEoBlwtlPWWSbTo/edit#gid=338801453","LimitedSpyChart!A740:L829")

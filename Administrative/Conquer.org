@@ -1,0 +1,8 @@
+-*-mode:org;-*-
+
+Kingdom conquers Tile
+ - Tile has buildings A and B
+   - Kingdom has option to nationalizes A and B
+     - A changes ownership to Kingdom and alerts owner and operator that
+       owner has changed to Kingdom
+     - B remains in the hands of other Kingdom
