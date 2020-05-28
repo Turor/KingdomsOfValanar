@@ -63,7 +63,7 @@ public class KoVModel {
 
 	private static Terrain[] loadTerrainTypes() {
 		try {
-			File terrainData = new File("../KingdomsOfValanar/initializationResources/TileTypes.csv");
+			File terrainData = new File("../KingdomsOfValanar/Administrative/DataProcessing/TileTypes.csv");
 			FileReader fh = new FileReader(terrainData);
 			BufferedReader fileScanner = new BufferedReader(fh);
 
@@ -103,7 +103,7 @@ public class KoVModel {
 
 	private static Tile[][] loadTiles(Terrain[] terrainTypes) {
 		try {		
-			File tileData = new File("../KingdomsOfValanar/initializationResources/TileData.csv");
+			File tileData = new File("../KingdomsOfValanar/Administrative/DataProcessing/TileData.csv");
 			FileReader fh = new FileReader(tileData);
 			BufferedReader fileScanner = new BufferedReader(fh);
 
