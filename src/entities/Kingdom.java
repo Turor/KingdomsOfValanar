@@ -10,7 +10,7 @@ import technology.Technology;
 import utilities.Description;
 import utilities.ResourcePackage;
 
-public class Kingdom implements PropertyChangeListener {
+public class Kingdom implements PropertyChangeListener, Comparable<Kingdom> {
 	
 	private Description desc;
 	
@@ -36,6 +36,8 @@ public class Kingdom implements PropertyChangeListener {
 	private Set<Tile> vision;
 	
 	private LinkedList<Building> buildings;
+	
+	//Policies
 	
 	
 	/**
@@ -96,8 +98,14 @@ public class Kingdom implements PropertyChangeListener {
 		return desc;
 	}
 	
+	@Override
 	public String toString() {
 		return desc.toString();
+	}
+	
+	
+	public int compareTo(Kingdom other) {
+		return this.getName().compareTo(other.getName());
 	}
 	
 	

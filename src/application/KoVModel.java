@@ -3,6 +3,7 @@ package application;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -22,42 +23,69 @@ import java.util.Scanner;
 public class KoVModel {
 
 	public static void main(String[] args) {
-		LinkedList<ResourcePair> dragon = new LinkedList<ResourcePair>();
-		dragon.add(new ResourcePair(ResourceTypes.Metal,1000));
-		dragon.add(new ResourcePair(ResourceTypes.Wood,1000));
-		dragon.add(new ResourcePair(ResourceTypes.Gold,1000));
-		dragon.add(new ResourcePair(ResourceTypes.Food,1000));
-		dragon.add(new ResourcePair(ResourceTypes.Happiness,5));
-		dragon.add(new ResourcePair(ResourceTypes.HappyCounter,5));
-		ResourcePackage testResources = new ResourcePackage(PackageType.flat, dragon);
-		dragon = null; //Let the GC collect this list
-		String name = "Dragon's Reach";
-		String tooltip = "Player controlled faction";
-		String flavor = "Faction born of the chilling north, the land is broken and scarred by years of the dragon's conflict with"
-				+ " the giantfolk. It is said that the last dragon's bide their time in wait for the time the giant's tyranny comes"
-				+ " to a close.";
-		Description kingdomDescription = new Description(name,tooltip,flavor);
-		Set<Technology> techs = new HashSet<Technology>();
-		Kingdom test = new Kingdom(kingdomDescription, testResources, techs);
 
-		System.out.println(test);
-		System.out.println(test.getAvailableResources());
+		Kingdom[] kingdoms =loadKingdoms();
+		
+		for(Kingdom k : kingdoms) {
+			System.out.println(k.toString());
+		}
+
 
 
 		Terrain[] terrainTypes = loadTerrainTypes();
-		for(Terrain t : terrainTypes) {
-			System.out.println(t.toString() + " cost " + t.getDevelopmentCost() + " to develop and "
-					+ "produces " + t.getProduction() + " per turn once developed.");
-		}
+//		for(Terrain t : terrainTypes) {
+//			System.out.println(t.toString() + " cost " + t.getDevelopmentCost() + " to develop and "
+//					+ "produces " + t.getProduction() + " per turn once developed.");
+//		}
 
 
 		Tile[][] tiles = loadTiles(terrainTypes);
-		for(int i = 0; i < tiles.length;i++) {
-			for(int j = 0; j < tiles[i].length;j++) {
-				System.out.print(tiles[i][j].toString());
+//		for(int i = 0; i < tiles.length;i++) {
+//			for(int j = 0; j < tiles[i].length;j++) {
+//				System.out.print(tiles[i][j].toString());
+//			}
+//			System.out.println();
+//		}
+	}
+
+	private static Kingdom[] loadKingdoms() {
+		try {
+			LinkedList<ResourcePair> dragon = new LinkedList<ResourcePair>();
+			dragon.add(new ResourcePair(ResourceTypes.Metal,1000));
+			dragon.add(new ResourcePair(ResourceTypes.Wood,1000));
+			dragon.add(new ResourcePair(ResourceTypes.Gold,1000));
+			dragon.add(new ResourcePair(ResourceTypes.Food,1000));
+			dragon.add(new ResourcePair(ResourceTypes.Happiness,5));
+			dragon.add(new ResourcePair(ResourceTypes.HappyCounter,5));
+			ResourcePackage defaultPackage = new ResourcePackage(PackageType.flat, dragon);
+
+			File kingdomData = new File("../KingdomsOfValanar/initializationResources/Kingdoms.txt");
+			FileReader fh = new FileReader(kingdomData);
+			BufferedReader fileScanner = new BufferedReader(fh);
+
+			LinkedList<Kingdom> tempList = new LinkedList<Kingdom>();
+
+			Set<Technology> techs = new HashSet<Technology>();
+			String row;
+			while((row = fileScanner.readLine())!= null) {
+				String[] data = row.split("`");
+				Kingdom temp = new Kingdom(new Description(data[0],data[1],data[2]),defaultPackage,techs);
+				tempList.add(temp);
 			}
-			System.out.println();
+
+			Kingdom[] kingdoms = new Kingdom[tempList.size()];
+			int i = 0;
+			for(Kingdom t : tempList) {
+				kingdoms[i] = t;
+				i++;
+			}
+			Arrays.sort(kingdoms);
+			fileScanner.close();
+			return kingdoms;			
+		}catch(Exception e) {
+			System.err.println("woo bad form:" + e.getMessage());
 		}
+		return null;
 	}
 
 
