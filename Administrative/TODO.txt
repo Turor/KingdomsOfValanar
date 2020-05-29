@@ -1,14 +1,14 @@
 Tasks
 Map 30%
- - Connections (Easiest)
+ - Connections Done
  - Djikstra Implementation (Harder)
  - Breadth First Search LoS algorithm (Hard)
 
-Unit Initialization (50%)
+Unit Initialization (90%)
  - Make unit types (enumerator) Done
- - Describe unit Modifiers and load methodology (Class thus loading will be needed)
- - Make unit races (Could be an enumerator)
-   - Add traits - enumerator
+ - Describe unit Modifiers and load methodology (Class thus loading will be needed) 50%
+ - Make unit races (Could be an enumerator) Done
+   - Add traits - enumerator Done
      - Status effects - enumerator
  - Make unit equipment (Enumerator) Done
  - Make unit experience (Enumerator) Done
@@ -16,9 +16,9 @@ Unit Initialization (50%)
  //Enumerator
 
 Kingdoms (25%)
- - Initialize different kingdoms (Easy) -> (Hard) depending on medium
- - Provide kingdom flavor (Easy) -> (Hard)
- - More data processing to get tile ownership etc from the spreadsheet (Normal)
+ - Initialize different kingdoms (75%)
+ - Provide kingdom flavor (Done)
+ - More data processing to get tile ownership etc from the spreadsheet (Done)
 
 Army Combat Simulator 0%
  - Outsource to DaveJey (Easiest?)
