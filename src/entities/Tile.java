@@ -1,5 +1,8 @@
 package entities;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +13,7 @@ import tileModifiers.TerrainTypes;
 import tileModifiers.TileDirections;
 import utilities.ResourcePackage;
 
-public class Tile {
+public class Tile implements PropertyChangeListener {
 	
 	private int row;
 	private int column;
@@ -31,7 +34,11 @@ public class Tile {
 	
 	private List<Building> buildingsPresent;
 	
+	private Set<Unit> units;
+	
 	private TerrainTypes dominantTerrain;
+	
+	private PropertyChangeSupport pcs;
 	
 	//Potentially the kingdoms with some claim to this tile
 
@@ -74,6 +81,8 @@ public class Tile {
 		buildingRights = new HashSet<Kingdom>();
 		buildingsPresent = new LinkedList<Building>();
 		claimants = new HashSet<Kingdom>();
+		units = new HashSet<Unit>();
+		pcs = new PropertyChangeSupport(this);
 	}
 	
 	/**
@@ -95,6 +104,24 @@ public class Tile {
 	
 	public void changeOperator(Kingdom newOperator) {
 		operator = newOperator;
+	}
+	
+	public void addUnit(Unit unit) {
+		units.add(unit);
+	}
+	
+	public void grantRecruitmentRights(Kingdom king) {
+		recruitmentRights.add(king);
+		pcs.addPropertyChangeListener("recruitment", king);
+	}
+	
+	public boolean revokeRecruitmentRights(Kingdom king) {
+		if(recruitmentRights.remove(king)) {
+			pcs.firePropertyChange("recruitment", null, king);
+			return true;
+		}
+		return false;
+		
 	}
 	
 	/**
@@ -131,6 +158,15 @@ public class Tile {
 			s+=defaultConnections[i].toString()+"\n";
 		}
 		return s;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if(evt.getPropertyName().equals("unitlocation")) {
+			units.remove(evt.getSource());
+			((Unit) evt.getSource()).unsubscribe(this);
+		}
+		
 	}
 	
 

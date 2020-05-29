@@ -54,5 +54,9 @@ public class UnitStatPackage {
 		morale *= stats.morale;
 		movement *= stats.movement;
 	}
+	
+	public String printStats() {
+		return String.format("[%2d,%2d,%2d,%2d,%2d]", (int)attack,(int)power,(int)defense,(int)toughness,(int)morale);
+	}
 
 }

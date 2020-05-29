@@ -63,15 +63,22 @@ public class KoVModel {
 //			System.out.println(k.getName()+ ":\t" +k.initializeIncome());
 //		}
 //
-		ResourcePackage unitCost= StaticFunctions.calculateUnitCost(UnitEquipment.MEDIUM, 
-				UnitRace.DRAGONBORN, UnitExperience.REGULAR, 
-				UnitSize.D6, UnitType.NAVY, null);
+//		ResourcePackage unitCost= StaticFunctions.calculateUnitCost(UnitEquipment.MEDIUM, 
+//				UnitRace.DRAGONBORN, UnitExperience.REGULAR, 
+//				UnitSize.D6, UnitType.NAVY, null);
 //
-//		Unit yolo = new Unit(UnitEquipment.MEDIUM, 
-//				UnitRace.DRAGONBORN, UnitType.NAVY,UnitExperience.REGULAR, 
-//				UnitSize.D6,null);
-//		System.out.println(yolo.getCost());
-//		System.out.println(unitCost);
+		Unit yolo = new Unit(UnitEquipment.MEDIUM, 
+				UnitRace.DRAGONBORN, UnitType.NAVY,UnitExperience.REGULAR, 
+				UnitSize.D6,null);
+		System.out.println(yolo.getCost());
+		tiles[0][0].grantRecruitmentRights(kingdoms[0]);
+		try {
+			yolo.buyUnit(kingdoms[0], tiles[0][0]);
+			System.out.println(yolo);
+		}catch(Exception e) {
+			System.err.println(e.getMessage());
+		}
+		
 		
 
 	}

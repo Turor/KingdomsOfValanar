@@ -44,6 +44,9 @@ public class Kingdom implements PropertyChangeListener, Comparable<Kingdom> {
 	
 	private int[] tileCounts;
 	
+	private Set<Tile> validRecruitmentLocations;
+	private Set<Tile> validBuildingLocations;
+	
 	//Policies
 	
 	
@@ -60,11 +63,19 @@ public class Kingdom implements PropertyChangeListener, Comparable<Kingdom> {
 		resources = new ResourcePackage(startingResources);
 		availableResources = new ResourcePackage(resources);
 		desc = new Description(description);
+		this.init();
+		
+		
+	}
+	
+	private void init() {
 		units = new LinkedList<Unit>();
 		vision = new HashSet<Tile>();
 		operatedTiles = new HashSet<Tile>();
 		claimedTiles = new HashSet<Tile>();
 		tileCounts = new int[TerrainTypes.count()];
+		validRecruitmentLocations = new HashSet<Tile>();
+		validBuildingLocations = new HashSet<Tile>();
 	}
 	
 	public ResourcePackage getAvailableResources() {
@@ -107,7 +118,10 @@ public class Kingdom implements PropertyChangeListener, Comparable<Kingdom> {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
+		if(evt.getPropertyName().equals("recruitment")) {
+			if(evt.getNewValue().equals(this))
+				validRecruitmentLocations.remove(evt.getSource());
+		}
 		
 	}
 	

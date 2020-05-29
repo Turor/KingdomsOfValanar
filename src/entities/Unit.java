@@ -1,4 +1,6 @@
 package entities;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,9 +26,8 @@ public class Unit {
 	
 	private Set<UnitModifiers> mods;
 	
-	
 	private Kingdom owner;
-	private LinkedList<Kingdom> secondaryControllers;
+	private Set<Kingdom> secondaryControllers;
 	private Tile location;
 		
 	private int health;
@@ -39,6 +40,9 @@ public class Unit {
 	private ResourcePackage upkeep;
 	
 	private Set<Tile> vision;
+	private Set<Tile> movementRange;
+	
+	private PropertyChangeSupport pcs;
 	
 	
 	public Unit(UnitEquipment equipment, UnitRace race, UnitType type, 
@@ -60,15 +64,27 @@ public class Unit {
 		this.initializeUpkeep();
 		this.generateStats();
 		this.populateTechnologyRequired();
+		this.initializeDataStructures();
+		this.pcs = new PropertyChangeSupport(this);
+		unitDescription = size.toString()+" " + experience.toString() +" "+ equipment.toString() + " " 
+				+race.toString()+" " + type.toString();
+		
 		
 	}
 	
+	private void initializeDataStructures() {
+		vision = new HashSet<Tile>();
+		movementRange = new HashSet<Tile>();
+		secondaryControllers = new HashSet<Kingdom>();
+	}
+
 	public void buyUnit(Kingdom owner, Tile location) throws Exception {
 		if(StaticFunctions.isAffordable(owner,cost))
 			if(StaticFunctions.isValidRecruitmentLocation(owner,location))
 				if(StaticFunctions.hasRequiredTechnology(owner,requiredTech)) {
 					this.owner = owner;
 					this.location = location;
+					this.pcs.addPropertyChangeListener("unitlocation", location);
 				}
 	}
 	
@@ -90,6 +106,13 @@ public class Unit {
 		cost.scalarMultiplication(size.costFactor());
 	}
 	
+	public void moveUnit(Tile destination) {
+		if(movementRange.contains(destination)) {
+			destination.addUnit(this);
+			pcs.firePropertyChange("unitlocation", location, destination);
+		}
+	}
+	
 	private void initializeUpkeep() {
 		upkeep = new ResourcePackage();
 		upkeep.add(ResourceTypes.Food,15);
@@ -106,6 +129,10 @@ public class Unit {
 		health = size.health();
 	}
 	
+	public void unsubscribe(PropertyChangeListener obj) {
+		pcs.removePropertyChangeListener(obj);
+	}
+	
 	public ResourcePackage getCost() {
 		return new ResourcePackage(cost);
 	}
@@ -117,7 +144,7 @@ public class Unit {
 	
 	
 	public String toString() {
-		return "Owner: " + owner + ", Location: " + location + ", " + unitDescription;
+		return "" + unitDescription + stats.printStats();
 	}
 	
 	

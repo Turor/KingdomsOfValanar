@@ -73,7 +73,7 @@ public enum UnitType{
 		case SIEGE_ENGINE:
 			return "Siege Engine";
 		case NAVY:
-			return "NAVY";
+			return "Navy";
 		default:
 			return "";
 		}
