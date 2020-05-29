@@ -27,6 +27,7 @@ Entities -*-mode:org;-*-
 *** Private Spending Action
 *** Public Action
 *** Private Action
+*** Free Action(s)
 *** Arcane Magic Action
 *** Divine Magic Action
 *** Nature Magic Action
