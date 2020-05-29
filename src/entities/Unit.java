@@ -110,7 +110,7 @@ public class Unit {
 		return new ResourcePackage(cost);
 	}
 	
-	private void populateTechnologyRequired() {
+	private void populateTechnologyRequired() { //Requires some parameters
 		requiredTech = new HashSet<Technology>();
 		//TODO
 	}
