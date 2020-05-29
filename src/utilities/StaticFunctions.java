@@ -6,13 +6,20 @@ import java.util.Set;
 import entities.Kingdom;
 import entities.Tile;
 import technology.Technology;
+import unitModifiers.UnitEquipment;
+import unitModifiers.UnitExperience;
+import unitModifiers.UnitModifiers;
+import unitModifiers.UnitRace;
+import unitModifiers.UnitSize;
+import unitModifiers.UnitTraits;
+import unitModifiers.UnitType;
 
 public class StaticFunctions {
-	
+
 	public static boolean isAffordable(Kingdom owner, ResourcePackage cost) {
 		return owner.getAvailableResources().sufficientResources(cost);
 	}
-	
+
 	public static boolean isValidBuildLocation(Kingdom owner, Tile location) throws Exception {
 		if(owner.equals(location.getOwner()))
 			return true;
@@ -22,9 +29,9 @@ public class StaticFunctions {
 			else
 				throw new Exception(owner.getName() + " does not have building rights for " + location);
 		}
-		
+
 	}
-	
+
 	public static boolean isValidRecruitmentLocation(Kingdom owner, Tile location) throws Exception {
 		if(owner.equals(location.getOwner()))
 			return true;
@@ -36,9 +43,9 @@ public class StaticFunctions {
 				throw new Exception(owner.getName() + " does not have recruitment rights for " + location);
 			}
 		}
-		
+
 	}
-	
+
 	public static boolean hasRequiredTechnology(Kingdom owner, Set<Technology> requiredTech) throws Exception {
 		HashSet<Technology> kingdomTech = new HashSet<Technology>(owner.getUnlockedTechnologies());
 		if(kingdomTech.containsAll(requiredTech))
@@ -56,5 +63,44 @@ public class StaticFunctions {
 			throw new Exception("Missing Technology: "+missingTech);
 		}
 	}
+
+	public static ResourcePackage calculateUnitCost(UnitEquipment equip, UnitRace race,
+			UnitExperience exp, UnitSize size, UnitType type, Set<UnitModifiers> mods) {
+		//Flat cost modifiers
+		HashSet<UnitTraits> trait = new HashSet<UnitTraits>();
+		ResourcePackage cost = new ResourcePackage();
+		cost.addPackage(equip.getCost());
+		cost.add(ResourceTypes.Gold,race.cost);
+		cost.add(ResourceTypes.Gold,exp.cost());
+
+		trait.addAll(race.getTraits());
+		for(UnitTraits t : trait) {
+			cost.add(ResourceTypes.Gold, t.cost);
+		}
+		
+		if(mods != null) 
+			for(UnitModifiers m : mods) {
+				if(m.applies(equip, exp, race, size, type)) {
+					cost.addPackage(m.getCost());
+				}
+			}
+		
+
+		//Multiplicative Cost Modifiers
+		cost.multiplication(type.getCost());
+		if(mods !=null)
+			for(UnitModifiers m : mods) {
+				if(m.applies(equip, exp, race, size, type))
+					cost.multiplication(m.getMultiCost());
+			}
+		cost.scalarMultiplication(size.costFactor());
+		return cost;
+	}
+	
+//	public static boolean isAffordable(ResourcePackage availableResources,Set<UnitModifiers> mods, UnitEquipment equip, UnitRace race,
+//			UnitExperience exp, UnitSize size, UnitType type, Set<UnitTraits> extraTraits ) {
+//		ResourcePackage cost = calculateUnitCost(mods,equip,race,exp,size,type,extraTraits);
+//		return availableResources.sufficientResources(cost);
+//	}
 
 }

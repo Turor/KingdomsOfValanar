@@ -11,8 +11,8 @@ public enum UnitEquipment {
 	HEAVY(0,4,4,0,0,100,200),
 	SUPER_HEAVY(0,6,6,0,0,150,300);
 	
-	private UnitEquipment(int attack, int power, int defense, int toughness, int morale,  double metalCost,
-			double woodCost) {
+	private UnitEquipment(int attack, int power, int defense, int toughness, int morale,  double woodCost,
+			double metalCost) {
 		this.attack = attack;
 		this.power = power;
 		this.defense = defense;

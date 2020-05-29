@@ -6,7 +6,6 @@ import java.util.Set;
 
 import technology.Technology;
 import unitModifiers.*;
-import utilities.UnitSize;
 import utilities.UnitStatPackage;
 import utilities.ResourcePackage;
 import utilities.ResourceTypes;
@@ -22,6 +21,8 @@ public class Unit {
 	private UnitRace race;
 	private Set<UnitTraits> traits; //TODO trait effect design
 	private UnitType type;
+	
+	private Set<UnitModifiers> mods;
 	
 	
 	private Kingdom owner;
@@ -40,8 +41,9 @@ public class Unit {
 	private Set<Tile> vision;
 	
 	
-	public Unit(UnitEquipment equipment, UnitRace race, UnitType type, LinkedList<UnitTraits> traits, 
-			UnitExperience experience, UnitSize size) throws RuntimeException {
+	public Unit(UnitEquipment equipment, UnitRace race, UnitType type, 
+			UnitExperience experience, UnitSize size,
+			Set<UnitModifiers> uniqueBonuses) throws RuntimeException {
 		this.equipment = equipment;
 		this.race = race;
 		this.type = type;
@@ -50,10 +52,15 @@ public class Unit {
 		this.traits.addAll(race.getTraits());
 		this.experience = experience;
 		this.size = size;
+		if(uniqueBonuses == null)
+			mods = new HashSet<UnitModifiers>();
+		else
+			mods = new HashSet<UnitModifiers>(uniqueBonuses);
 		this.initializeCost();
 		this.initializeUpkeep();
 		this.generateStats();
 		this.populateTechnologyRequired();
+		
 	}
 	
 	public void buyUnit(Kingdom owner, Tile location) throws Exception {
@@ -73,6 +80,12 @@ public class Unit {
 		for(UnitTraits t : traits) {
 			cost.add(ResourceTypes.Gold, t.cost);
 		}
+		for(UnitModifiers m : mods) {
+			cost.addPackage(m.getCost());
+		}
+		for(UnitModifiers m:mods) {
+			cost.multiplication(m.getMultiCost());
+		}
 		cost.multiplication(type.getCost());
 		cost.scalarMultiplication(size.costFactor());
 	}
@@ -91,6 +104,10 @@ public class Unit {
 		stats.add(experience.getStatPackage());
 		movementClass = type.movementClass();
 		health = size.health();
+	}
+	
+	public ResourcePackage getCost() {
+		return new ResourcePackage(cost);
 	}
 	
 	private void populateTechnologyRequired() {

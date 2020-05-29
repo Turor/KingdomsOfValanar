@@ -5,13 +5,13 @@ import java.util.List;
 //import java.util.Set;
 
 public class ResourcePackage {
-	
+
 	private double[] resources;
-	
+
 	//private Set<ResourceTypes> affected;
-	
+
 	public final PackageType type;
-	
+
 	public ResourcePackage(PackageType type, List<ResourcePair> source) {
 		this.resources = new double[ResourceTypes.count()];
 		//affected = new HashSet<ResourceTypes>();
@@ -21,56 +21,61 @@ public class ResourcePackage {
 		}
 		this.type=type;
 	}
-	
+
 	public ResourcePackage(PackageType type) {
-		this.resources = new double[ResourceTypes.count()];
-		this.type=type;
-		for(int i = 0; i < resources.length;i++) {
-			resources[i] = 1;
+		if(PackageType.multiplicative == type) {
+			this.resources = new double[ResourceTypes.count()];
+			this.type=type;
+			for(int i = 0; i < resources.length;i++) {
+				resources[i] = 1;
+			}
+		}else {
+			this.resources = new double[ResourceTypes.count()];
+			this.type = type;
 		}
 	}
-	
+
 	public ResourcePackage(ResourcePackage source) {
 		type = source.type;
 		resources = source.getResources();
 	}
-	
+
 	public ResourcePackage() {
 		resources = new double[ResourceTypes.count()];
 		type = PackageType.flat;
 	}
-	
+
 	public void add(ResourceTypes type, double amount) {
 		resources[type.getDbValue()]+=amount;
 	}
-	
+
 	public void addPackage(ResourcePackage source) {
 		double[] other = source.getResources();
 		for(int i = 0 ; i < other.length;i++)
 			resources[i] += other[i];
 	}
-	
+
 	public void multiplication(ResourcePackage source) {
 		double[] other = source.getResources();
 		for(int i = 0; i < other.length; i++) {
 			resources[i]*=other[i];
 		}
 	}
-	
+
 	public void multiply(ResourceTypes type, double amount) {
 		resources[type.getDbValue()]*=amount;
 	}
-	
+
 	public void scalarMultiplication(double scalar) {
 		for(int i = 0; i < resources.length;i++) {
 			resources[i]*=scalar;
 		}
 	}
-	
+
 	public double[] getResources() {
 		return resources.clone();
 	}
-	
+
 	public double get(ResourceTypes type) {
 		return resources[type.getDbValue()];
 	}
@@ -80,11 +85,11 @@ public class ResourcePackage {
 		for(int i = 0; i < resources.length;i++) {
 			if(resources[i]-costArray[i] < 0)
 				return false; //A throws clause would be better here because it could say which resources was insufficient
-				//ResourcesTypes.
+			//ResourcesTypes.
 		}
 		return true;
 	}
-	
+
 	public String toString() {
 		String naive = "";
 		for(int i = 0; i < resources.length;i++) {

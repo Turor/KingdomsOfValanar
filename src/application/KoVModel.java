@@ -10,13 +10,20 @@ import java.util.Set;
 
 import entities.Kingdom;
 import entities.Tile;
+import entities.Unit;
 import technology.Technology;
 import tileModifiers.TerrainTypes;
+import unitModifiers.UnitEquipment;
+import unitModifiers.UnitExperience;
+import unitModifiers.UnitRace;
+import unitModifiers.UnitSize;
+import unitModifiers.UnitType;
 import utilities.Description;
 import utilities.PackageType;
 import utilities.ResourcePackage;
 import utilities.ResourcePair;
 import utilities.ResourceTypes;
+import utilities.StaticFunctions;
 
 import java.util.Scanner;
 
@@ -50,6 +57,17 @@ public class KoVModel {
 		for(Kingdom k : kingdoms) {
 			System.out.println(k.getName()+ ":\t" +k.initializeIncome());
 		}
+		
+		ResourcePackage unitCost= StaticFunctions.calculateUnitCost(UnitEquipment.MEDIUM, 
+				UnitRace.DRAGONBORN, UnitExperience.REGULAR, 
+				UnitSize.D6, UnitType.NAVY, null);
+		
+		Unit yolo = new Unit(UnitEquipment.MEDIUM, 
+				UnitRace.DRAGONBORN, UnitType.NAVY,UnitExperience.REGULAR, 
+				 UnitSize.D6,null);
+		System.out.println(yolo.getCost());
+		System.out.println(unitCost);
+		
 	}
 
 	private static Kingdom[] loadKingdoms() {

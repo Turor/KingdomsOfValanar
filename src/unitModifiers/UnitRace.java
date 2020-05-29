@@ -1,50 +1,49 @@
 package unitModifiers;
 
-import java.util.LinkedList;
-import java.util.List;
+
 import java.util.Set;
 import java.util.HashSet;
 
 import utilities.UnitStatPackage;
 
 public enum UnitRace {
-	BUGBEAR(2,0,0,0,1,50, 
+	BUGBEAR(2,0,0,0,1,100, 
 			new UnitTraits[] {UnitTraits.MARTIAL}),
-	DRAGONBORN(2,2,1,1,1,175,
+	DRAGONBORN(2,2,1,1,1,200,
 			new UnitTraits[] {UnitTraits.COURAGEOUS}),
 	DWARF(3,1,1,2,1,225,
 			new UnitTraits[] {UnitTraits.STALWART}),
-	ELF(2,0,0,0,1,50,
+	ELF(2,0,0,0,1,100,
 			new UnitTraits[] {UnitTraits.ETERNAL}),
-	ELF_WINGED(1,1,0,0,1,50,
+	ELF_WINGED(1,1,0,0,1,100,
 			new UnitTraits[] {UnitTraits.ETERNAL}),
-	GHOUL(-1,0,2,2,0,125,
+	GHOUL(-1,0,2,2,0,100,
 			new UnitTraits[] {UnitTraits.UNDEAD,UnitTraits.HORRIFYING,UnitTraits.RAVENOUS}),
 	GNOLL(2,0,0,0,1,50,
 			new UnitTraits[] {UnitTraits.RAVENOUS}),
-	GNOME(1,-1,1,-1,1,-25,
+	GNOME(1,-1,1,-1,1,50,
 			new UnitTraits[] {}),
-	GOBLIN(-1,-1,1,-1,0,-75,
+	GOBLIN(-1,-1,1,-1,0,-50,
 			new UnitTraits[] {}),
-	HOBGOBLIN(2,0,0,0,1,50,
+	HOBGOBLIN(2,0,0,0,1,100,
 			new UnitTraits[] {UnitTraits.BRED_FOR_WAR,UnitTraits.MARTIAL}),
-	HUMAN(2,0,0,0,1,50,
+	HUMAN(2,0,0,0,1,100,
 			new UnitTraits[] {UnitTraits.COURAGEOUS}),
-	KOBOLD(-1,-1,1,-1,-1,-75,
+	KOBOLD(-1,-1,1,-1,-1,-100,
 			new UnitTraits[] {}),
-	LIZARDFOLK(2,1,-1,1,1,100,
+	LIZARDFOLK(2,1,-1,1,1,125,
 			new UnitTraits[] {UnitTraits.AMPHIBIOUS}),
 	OGRE(0,2,0,2,1,150,
 			new UnitTraits[] {UnitTraits.BRUTAL}),
-	ORC(2,1,1,1,2,150,
+	ORC(2,1,1,1,2,225,
 			new UnitTraits[] {UnitTraits.SAVAGE}),
-	SKELETON(-2,-1,1,1,1,0,
+	SKELETON(-2,-1,1,1,1,25,
 			new UnitTraits[] {UnitTraits.UNDEAD,UnitTraits.MINDLESS}),
-	TREANT(0,2,0,2,0,150,
+	TREANT(0,2,0,2,0,100,
 			new UnitTraits[] {UnitTraits.TWISTING_ROOTS,UnitTraits.ROCK_HURLER}),
-	TROLL(0,2,0,2,0,150,
+	TROLL(0,2,0,2,0,100,
 			new UnitTraits[] {UnitTraits.REGENERATE}),
-	ZOMBIE(-2,0,2,2,2,100,
+	ZOMBIE(-2,0,2,2,2,150,
 			new UnitTraits[] {UnitTraits.UNDEAD,UnitTraits.MINDLESS}),
 	;
 

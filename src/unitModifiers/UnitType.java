@@ -6,7 +6,7 @@ import utilities.ResourceTypes;
 import utilities.UnitStatPackage;
 
 public enum UnitType{
-	FLYING(0	,0,	0,	0,	3,	16,	1,	1,	2,MovementClass.FLYING),
+	FLYING(0	,	0,	0,	0,	3,	16,	1,	1,	2,MovementClass.FLYING),
 	ARCHER(0,1,0,0,1,8,1,2,1.25,MovementClass.FOOT),
 	CAVALRY(1,1,0,0,2,16,1.5,1.5,1.5,MovementClass.MOUNTED),
 	LEVY(0,0,0,0,-1,8,0.75,0.75,0.75,MovementClass.FOOT),
@@ -44,7 +44,10 @@ public enum UnitType{
 	}
 	
 	public ResourcePackage getCost() {
-		ResourcePackage temp = new ResourcePackage(PackageType.multiplicative);
+		ResourcePackage temp = new ResourcePackage();
+		temp.add(ResourceTypes.Metal, 1);
+		temp.add(ResourceTypes.Wood,1);
+		temp.add(ResourceTypes.Gold, 1);
 		temp.multiply(ResourceTypes.Metal, metalCost);
 		temp.multiply(ResourceTypes.Wood, woodCost);
 		temp.multiply(ResourceTypes.Gold, goldCost);
