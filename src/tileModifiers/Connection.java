@@ -78,6 +78,14 @@ public class Connection {
 		return new HashSet<Tile>(connection);
 	}
 	
+	public String toString() {
+		String s = "";
+		for(Tile c : connection) {
+			s+= c.toString();
+		}
+		return s;
+	}
+	
 
 	
 	

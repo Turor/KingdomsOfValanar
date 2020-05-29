@@ -7,6 +7,7 @@ import java.util.Set;
 
 import tileModifiers.Connection;
 import tileModifiers.TerrainTypes;
+import tileModifiers.TileDirections;
 import utilities.ResourcePackage;
 
 public class Tile {
@@ -20,7 +21,9 @@ public class Tile {
 	
 	private Kingdom operator;
 	
-	private Set<Connection> connections;
+	private Tile[] defaultConnections;
+	
+	//TODO: Advanced connections like permanent portals
 	
 	private Set<Kingdom> recruitmentRights;
 	
@@ -51,10 +54,6 @@ public class Tile {
 		return new HashSet<Kingdom>(buildingRights);
 	}
 	
-	public void addConnnection(Connection newConnection) {
-		connections.add(newConnection);
-	}
-	
 	/**
 	 * Initialize a tile with no owner but a location on the map and with a given terrain type.
 	 * @param mapCoordinates - The geographical location of this tile, used to place the tile on a map
@@ -70,7 +69,7 @@ public class Tile {
 	}
 	
 	private void init() {
-		connections = new HashSet<Connection>();
+		defaultConnections = new Tile[8];
 		recruitmentRights = new HashSet<Kingdom>();
 		buildingRights = new HashSet<Kingdom>();
 		buildingsPresent = new LinkedList<Building>();
@@ -80,9 +79,10 @@ public class Tile {
 	/**
 	 * Form a new connection to a different tile
 	 * @param newConnection
+	 * @param dir The enumerator direction
 	 */
-	public void addConnection(Connection newConnection) {
-		connections.add(newConnection);
+	public void addConnection(Tile other, TileDirections dir) {
+		defaultConnections[dir.index] = other;
 	}
 	
 	public void changeTerrain(TerrainTypes newTerrain) {
@@ -123,6 +123,14 @@ public class Tile {
 	
 	public String toString() {
 		return String.format("%9s[%3d,%3d]\t", dominantTerrain.toString(),row,column);
+	}
+	
+	public String printConnections() {
+		String s = "";
+		for(int i = 0; i < defaultConnections.length;i++) {
+			s+=defaultConnections[i].toString()+"\n";
+		}
+		return s;
 	}
 	
 
