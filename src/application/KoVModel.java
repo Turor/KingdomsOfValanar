@@ -31,7 +31,6 @@ import java.util.Scanner;
 
 public class KoVModel {
 
-	private static Tile[][] tiles;
 
 	public static void main(String[] args) {
 
@@ -50,8 +49,7 @@ public class KoVModel {
 		//		}
 
 
-		loadTiles(kingdoms);
-		formTileConnections();
+		Tile[][] tiles = loadTiles(kingdoms);
 		//		for(int i = 0; i < tiles.length;i++) {
 		//			for(int j = 0; j < tiles[i].length;j++) {
 		//				System.out.print(tiles[i][j].toString());
@@ -101,7 +99,7 @@ public class KoVModel {
 	}
 
 
-	private static Kingdom[] loadKingdoms() {
+	public static Kingdom[] loadKingdoms() {
 		try {
 			LinkedList<ResourcePair> dragon = new LinkedList<ResourcePair>();
 			dragon.add(new ResourcePair(ResourceTypes.Metal,1000));
@@ -182,7 +180,7 @@ public class KoVModel {
 	//		return null;
 	//	}
 
-	private static Tile[][] loadTiles(Kingdom[] kingdoms) {
+	public static Tile[][] loadTiles(Kingdom[] kingdoms) {
 		try {		
 			File tileData = new File("../KingdomsOfValanar/initializationResources/TileData.csv");
 			FileReader fh = new FileReader(tileData);
@@ -219,10 +217,11 @@ public class KoVModel {
 				}
 			}
 			fileScanner.close();
-			tiles = new Tile[row][maxCol+1];
+			Tile[][] tiles = new Tile[row][maxCol+1];
 			for(Tile t : tiles2) {
 				tiles[t.getRow()][t.getColumn()] = t;			
 			}
+			formTileConnections(tiles);
 			return tiles;
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -230,40 +229,37 @@ public class KoVModel {
 		return null;
 	}
 
-	private static void formTileConnections() {
+	private static void formTileConnections(Tile[][] tiles) {
 		for(int row = 0; row < tiles.length;row++) {
 			for(int col = 0; col < tiles[row].length;col++) {
 				if(row < tiles.length-1) {//S connections are valid
-					newConnection(row,col,row+1,col,TileDirections.SOUTH);
+					tiles[row][col].addConnection(tiles[row+1][col],TileDirections.SOUTH);
 				}
 				if(row > 0) {//N connections are valid
-					newConnection(row,col,row-1,col,TileDirections.NORTH);
+					tiles[row][col].addConnection(tiles[row-1][col],TileDirections.NORTH);
 				}
 				if(col > 0) {//W connections are valid
-					newConnection(row,col,row,col-1,TileDirections.WEST);
+					tiles[row][col].addConnection(tiles[row][col-1],TileDirections.WEST);
 				}
 				if(col < tiles[row].length-1) {//E connections are valid
-					newConnection(row,col,row,col+1,TileDirections.EAST);
+					tiles[row][col].addConnection(tiles[row][col+1],TileDirections.EAST);
 				}
 				if(col > 0 && row > 0) {//NW connections are valid
-					newConnection(row,col,row-1,col-1,TileDirections.NORTHWEST);
+					tiles[row][col].addConnection(tiles[row-1][col-1],TileDirections.NORTHWEST);
 				}
 				if(col > 0 && row <tiles.length-1) {//SW connections are valid
-					newConnection(row,col,row+1,col-1,TileDirections.SOUTHWEST);
+					tiles[row][col].addConnection(tiles[row+1][col-1],TileDirections.SOUTHWEST);
 				}
 				if(row > 0 && col < tiles[row].length-1) {//NE connections are valid
-					newConnection(row,col,row-1,col+1,TileDirections.NORTHEAST);
+					tiles[row][col].addConnection(tiles[row-1][col+1],TileDirections.NORTHEAST);
 				}
 				if(row < tiles.length-1 && col < tiles[row].length-1) {//SE connections are valid
-					newConnection(row,col,row+1,col+1,TileDirections.SOUTHEAST);
+					tiles[row][col].addConnection(tiles[row+1][col+1],TileDirections.SOUTHEAST);
 				}	
 			}
 		}
 	}
 
-	private static void newConnection(int row1, int col1, int row2, int col2, TileDirections dir) {
-		tiles[row1][col1].addConnection(tiles[row2][col2], dir);
-	}
 }
 
 
