@@ -123,6 +123,7 @@ public class StaticFunctions {
 			}
 			result.add(t);
 			t.isFinished();
+			clean.add(t);
 		}
 		for(Tile t : clean) {
 			t.reset();

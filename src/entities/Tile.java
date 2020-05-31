@@ -202,8 +202,16 @@ public class Tile implements PropertyChangeListener, Comparable<Tile> {
 			}
 		}
 		case SAIL:{
-			//unaffected by roads and terrain
-			return 1;
+			//1 cost at sea, infantry costs on land
+			if(dominantTerrain.equals(TerrainTypes.Sea) || dominantTerrain.equals(TerrainTypes.River)||
+					dominantTerrain.equals(TerrainTypes.Lake)) {
+				return 1;
+			}else {
+				if(this.hasRoad)
+					return dominantTerrain.getMovementCost()/2;
+				else
+					return dominantTerrain.getMovementCost();
+			}
 		}
 		case SIEGE:{
 			//affected by roads and doubly affected by terrain

@@ -105,18 +105,22 @@ public class Unit extends HasVision {
 		cost.scalarMultiplication(size.costFactor());
 	}
 
-	public void moveUnit(Tile destination) {
+	public void moveUnit(Tile destination) throws Exception {
 		if(super.movementRange == null) {
 			super.getMovementRange();
-			if(super.movementRange.contains(destination)) {
-				destination.addUnit(this);
-				pcs.firePropertyChange("unitlocation", location, destination);
-				Set<Tile> temp = super.visionRange;
-				super.updateVision();
-				pcs.firePropertyChange("vision", temp,super.visionRange);
-			}
+		}
+		if(super.movementRange.contains(destination)) {
+			destination.addUnit(this);
+			pcs.firePropertyChange("unitlocation", location, destination);
+			this.location = destination;
+			Set<Tile> temp = super.visionRange;
+			super.updateVision();
+			pcs.firePropertyChange("vision", temp,super.visionRange);
+		}else {
+			throw new Exception(destination + " out of range of " + this.location);
 		}
 	}
+
 
 	private void initializeUpkeep() {
 		upkeep = new ResourcePackage();

@@ -30,7 +30,7 @@ import utilities.StaticFunctions;
 import java.util.Scanner;
 
 public class KoVModel {
-	
+
 	private static Tile[][] tiles;
 
 	public static void main(String[] args) {
@@ -59,14 +59,14 @@ public class KoVModel {
 		//			System.out.println();
 		//		}
 
-//		for(Kingdom k : kingdoms) {
-//			System.out.println(k.getName()+ ":\t" +k.initializeIncome());
-//		}
-//
-//		ResourcePackage unitCost= StaticFunctions.calculateUnitCost(UnitEquipment.MEDIUM, 
-//				UnitRace.DRAGONBORN, UnitExperience.REGULAR, 
-//				UnitSize.D6, UnitType.NAVY, null);
-//
+		//		for(Kingdom k : kingdoms) {
+		//			System.out.println(k.getName()+ ":\t" +k.initializeIncome());
+		//		}
+		//
+		//		ResourcePackage unitCost= StaticFunctions.calculateUnitCost(UnitEquipment.MEDIUM, 
+		//				UnitRace.DRAGONBORN, UnitExperience.REGULAR, 
+		//				UnitSize.D6, UnitType.NAVY, null);
+		//
 		Unit yolo = new Unit(UnitEquipment.MEDIUM, 
 				UnitRace.DRAGONBORN, UnitType.NAVY,UnitExperience.REGULAR, 
 				UnitSize.D6,null,tiles[0][0]);
@@ -78,15 +78,25 @@ public class KoVModel {
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
-		
+
 		Set<Tile> vision = yolo.getVision();
 		for(Tile v : vision) {
 			System.out.println(v);
 		}
-		
-		
+		try {
+			yolo.moveUnit(tiles[17][17]);
+			System.out.println(yolo);
+			System.out.println(yolo.getLocation());
+			vision = yolo.getVision();
+			System.out.println(vision.size());
+		}catch(Exception e) {
+			System.err.println(e.getMessage());
+		}
+
+
 
 	}
+
 
 	private static Kingdom[] loadKingdoms() {
 		try {
@@ -247,7 +257,7 @@ public class KoVModel {
 			}
 		}
 	}
-	
+
 	private static void newConnection(int row1, int col1, int row2, int col2, TileDirections dir) {
 		tiles[row1][col1].addConnection(tiles[row2][col2], dir);
 	}
