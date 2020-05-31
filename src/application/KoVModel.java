@@ -75,6 +75,7 @@ public class KoVModel {
 		try {
 			yolo.buyUnit(kingdoms[0], tiles[0][0]);
 			System.out.println(yolo);
+			System.out.println(tiles[0][0].listUnits());
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
@@ -84,10 +85,11 @@ public class KoVModel {
 			System.out.println(v);
 		}
 		try {
-			yolo.moveUnit(tiles[17][17]);
+			yolo.moveUnit(tiles[15][15]);
 			System.out.println(yolo);
 			System.out.println(yolo.getLocation());
 			vision = yolo.getVision();
+			System.out.println(tiles[15][15].listUnits());
 			System.out.println(vision.size());
 		}catch(Exception e) {
 			System.err.println(e.getMessage());

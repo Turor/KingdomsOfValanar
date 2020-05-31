@@ -179,6 +179,7 @@ public class Tile implements PropertyChangeListener, Comparable<Tile> {
 
 	}
 
+	//Dijkstra Methods
 	public int costFor(HasVision type) {
 		switch(type.getMovementClass()) {
 		case FLYING:{
@@ -264,6 +265,16 @@ public class Tile implements PropertyChangeListener, Comparable<Tile> {
 			return 1;
 		}
 		return 0;
+	}
+	//End Djikstra Methods
+	
+	public String listUnits() {
+		String s = this.toString()+"[\n";
+		for(Unit u : units) {
+			s +="\t"+ u.toString() + "\t";
+		}
+		s += "\n]";
+		return s;
 	}
 
 

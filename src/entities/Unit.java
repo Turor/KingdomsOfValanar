@@ -80,6 +80,7 @@ public class Unit extends HasVision {
 				if(StaticFunctions.hasRequiredTechnology(owner,requiredTech)) {
 					this.owner = owner;
 					this.location = location;
+					this.location.addUnit(this);
 					this.pcs.addPropertyChangeListener("unitlocation", location);
 					this.pcs.addPropertyChangeListener("location",owner);
 					this.pcs.addPropertyChangeListener("vision", owner);
