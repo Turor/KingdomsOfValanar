@@ -78,15 +78,16 @@ public class KoVModel {
 			System.err.println(e.getMessage());
 		}
 
-		Set<Tile> vision = yolo.getVision();
+		Set<Tile> vision = StaticFunctions.concurrentDijkstra(yolo, 8);
 		for(Tile v : vision) {
 			System.out.println(v);
 		}
+		System.out.println(vision.size());
 		try {
 			yolo.moveUnit(tiles[15][15]);
 			System.out.println(yolo);
 			System.out.println(yolo.getLocation());
-			vision = yolo.getVision();
+			vision = StaticFunctions.concurrentDijkstra(yolo, 8);
 			System.out.println(tiles[15][15].listUnits());
 			System.out.println(vision.size());
 			System.out.println(tiles[0][0].listUnits());

@@ -1,6 +1,7 @@
 package utilities;
 
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -129,6 +130,46 @@ public class StaticFunctions {
 			t.reset();
 		}
 		return result;
+	}
+	
+	/**
+	 * This variant of Dijkstra computes the set of tiles within a supplied range of source in a way
+	 * that doesn't modify any shared resources. This means that one can freely spawn threads on this so
+	 * long as this is done exclusively before or after tiles have been modified via terraforming, having a
+	 * portal constructed, or roads constructed. I favor pathfinding and LoS being the last calculated update
+	 * in a given turn.
+	 * @param source
+	 * @param range
+	 * @return
+	 */
+	public static Set<Tile> concurrentDijkstra(HasVision source, int range){
+		Set<Tile> finished = new HashSet<Tile>();
+		Hashtable<Tile,Integer> enqueued = new Hashtable<Tile,Integer>(); 
+		PriorityQueue<DijkstraTileContainer> pq = new PriorityQueue<DijkstraTileContainer>();
+		DijkstraTileContainer src = new DijkstraTileContainer(source.getLocation(),0);
+		pq.add(src);
+		enqueued.put(src.tile, 0);
+		
+		while(!pq.isEmpty()) {
+			DijkstraTileContainer t = pq.poll();
+			finished.add(t.tile);
+			List<Tile> connections = t.tile.getConnections();
+			for(Tile p : connections) {
+				if(!finished.contains(p)) {
+					if(!enqueued.contains(p)) {
+						enqueued.put(p,999);
+					}
+					int distance = t.distance + p.costFor(source);	
+					if(distance < enqueued.get(p) && distance < range) {
+						enqueued.put(p, distance);
+						pq.add(new DijkstraTileContainer(p,distance));
+					}
+				}
+			}
+		}
+		
+		return finished;
+		
 	}
 	
 //	public static boolean isAffordable(ResourcePackage availableResources,Set<UnitModifiers> mods, UnitEquipment equip, UnitRace race,

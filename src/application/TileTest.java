@@ -4,6 +4,7 @@ import entities.Kingdom;
 import entities.Tile;
 import gui.TileButton;
 import javafx.application.Application;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -43,6 +44,8 @@ public class TileTest extends Application {
 		
 		scr.setContent(grid);
 		scr.setMinViewportHeight(100);
+		scr.setPannable(true);
+		
 		
 		stage.setScene(scene);
 		stage.setFullScreen(true);
