@@ -28,12 +28,12 @@ public enum UnitType{
 		movementStyle = style;
 	}
 	
-	private final int attack;
-	private final int power;
-	private final int defense;
-	private final int toughness;
-	private final int morale;
-	private final int movement;
+	public final int attack;
+	public final int power;
+	public final int defense;
+	public final int toughness;
+	public final int morale;
+	public final int movement;
 	private final double metalCost;
 	private final double woodCost;
 	private final double goldCost;

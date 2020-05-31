@@ -69,7 +69,7 @@ public class KoVModel {
 //
 		Unit yolo = new Unit(UnitEquipment.MEDIUM, 
 				UnitRace.DRAGONBORN, UnitType.NAVY,UnitExperience.REGULAR, 
-				UnitSize.D6,null);
+				UnitSize.D6,null,tiles[0][0]);
 		System.out.println(yolo.getCost());
 		tiles[0][0].grantRecruitmentRights(kingdoms[0]);
 		try {
@@ -77,6 +77,11 @@ public class KoVModel {
 			System.out.println(yolo);
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
+		}
+		
+		Set<Tile> vision = yolo.getVision();
+		for(Tile v : vision) {
+			System.out.println(v);
 		}
 		
 		

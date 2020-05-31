@@ -1,7 +1,11 @@
 package utilities;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.Stack;
 
 import entities.Kingdom;
 import entities.Tile;
@@ -95,6 +99,35 @@ public class StaticFunctions {
 			}
 		cost.scalarMultiplication(size.costFactor());
 		return cost;
+	}
+	
+	public static Set<Tile> dijkstra(HasVision source, int range){
+		PriorityQueue<Tile> pq = new PriorityQueue<Tile>();
+		source.getLocation().setDistance(0);;
+		pq.add(source.getLocation());
+		Stack<Tile> clean = new Stack<Tile>();
+		Set<Tile> result = new HashSet<Tile>();
+		
+		while(!pq.isEmpty()) {
+			Tile t = pq.poll();
+			List<Tile> connections = t.getConnections();
+			t.isFinished();
+			for(Tile p : connections) {
+				if(!p.isFinished()) {
+					int distance = t.getDistance() + p.costFor(source);
+					if(distance < p.getDistance() && distance < range) {
+						p.setDistance(distance);
+						pq.add(p);
+					}
+				}
+			}
+			result.add(t);
+			t.isFinished();
+		}
+		for(Tile t : clean) {
+			t.reset();
+		}
+		return result;
 	}
 	
 //	public static boolean isAffordable(ResourcePackage availableResources,Set<UnitModifiers> mods, UnitEquipment equip, UnitRace race,
