@@ -46,6 +46,8 @@ public class Tile implements PropertyChangeListener, Comparable<Tile> {
 	private Set<Unit> units;
 
 	private PropertyChangeSupport pcs;
+	
+	private PropertyChangeListener graphicsElement;
 
 	//Potentially the kingdoms with some claim to this tile
 
@@ -66,6 +68,14 @@ public class Tile implements PropertyChangeListener, Comparable<Tile> {
 	public Set<Kingdom> getBuildingRights() {
 		// TODO Auto-generated method stub
 		return new HashSet<Kingdom>(buildingRights);
+	}
+	
+	public String getOperatorName() {
+		if(operator == null) {
+			return "";
+		}else {
+			return operator.getName();
+		}
 	}
 
 	/**
@@ -94,6 +104,11 @@ public class Tile implements PropertyChangeListener, Comparable<Tile> {
 		distance = 999;
 		finished = false;
 	}
+	
+	public void registerGraphicsListener(PropertyChangeListener p) {
+		this.pcs.addPropertyChangeListener(p);
+		this.pcs.firePropertyChange("terrain", null, this.dominantTerrain);
+	}
 
 	/**
 	 * Form a new connection to a different tile
@@ -109,11 +124,21 @@ public class Tile implements PropertyChangeListener, Comparable<Tile> {
 	}
 
 	public void changeOwner(Kingdom newOwner) {
+		Kingdom old = owner;
 		owner = newOwner;
+		this.pcs.firePropertyChange("ownership", old, owner);
+		this.pcs.removePropertyChangeListener(old);
+		this.pcs.addPropertyChangeListener(owner);
+		
 	}
 
 	public void changeOperator(Kingdom newOperator) {
+		Kingdom old = operator;
 		operator = newOperator;
+		this.pcs.firePropertyChange("operator", old, operator);
+		this.pcs.removePropertyChangeListener(old);
+		this.pcs.addPropertyChangeListener(owner);
+		
 	}
 
 	public void addUnit(Unit unit) {

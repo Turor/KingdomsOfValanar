@@ -1,1 +1,52 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.terrain{
+	-fx-border-color: black;
+	-fx-border-width: 1;
+	-fx-border-style: solid;
+}
+
+#Mountains{
+	-fx-background-color:saddlebrown;
+}
+#Hills{
+	-fx-background-color:peru;
+}
+#Plains{
+	-fx-background-color:green;
+}
+#Safari{
+	-fx-background-color: gold;
+}
+#Forest{
+	-fx-background-color: forestgreen;
+}
+#Jungle{
+	-fx-background-color: darkgreen;
+}
+#Taiga{
+	-fx-background-color: #B6D9CA;
+}
+#Tundra{
+	-fx-background-color:aliceblue;
+}
+#Swamp{
+	-fx-background-color: #1C4A36;
+}
+#River{
+	-fx-background-color:deepskyblue;
+}
+#Lake{
+	-fx-background-color:cornflowerblue;
+}
+#Sea{
+	-fx-background-color: #4661B3;
+}
+#Desert{
+	-fx-background-color:#E6E3D1;
+}
+#Snow{
+	-fx-background-color: white;
+}
+#City{
+	-fx-background-color:black;
+}

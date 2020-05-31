@@ -63,10 +63,9 @@ public class Kingdom implements PropertyChangeListener, Comparable<Kingdom> {
 		resources = new ResourcePackage(startingResources);
 		availableResources = new ResourcePackage(resources);
 		desc = new Description(description);
-		this.init();
-		
-		
+		this.init();	
 	}
+	
 	
 	private void init() {
 		units = new LinkedList<Unit>();
@@ -87,7 +86,6 @@ public class Kingdom implements PropertyChangeListener, Comparable<Kingdom> {
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
 		return desc.name;
 	}
 	
