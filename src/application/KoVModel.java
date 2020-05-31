@@ -91,6 +91,7 @@ public class KoVModel {
 			vision = yolo.getVision();
 			System.out.println(tiles[15][15].listUnits());
 			System.out.println(vision.size());
+			System.out.println(tiles[0][0].listUnits());
 		}catch(Exception e) {
 			System.err.println(e.getMessage());
 		}
