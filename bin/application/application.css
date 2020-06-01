@@ -1,48 +1,48 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
-.terrain{
+.tterrain{
 	-fx-border-color: black;
 	-fx-border-width: 1;
 	-fx-border-style: solid;
 }
 
 #Mountains{
-	-fx-background-image:url(../../tile_img/kov_mountain.jpg);
+	-fx-background-image:url(../../tile_img/biome/kov_mountain.jpg);
 }
 #Hills{
-	-fx-background-color:peru;
+	-fx-background-image:url(../../tile_img/biome/kov_hill.jpg);
 }
 #Plains{
-	-fx-background-color:green;
+	-fx-background-image:url(../../tile_img/biome/kov_plains.jpg);
 }
 #Safari{
-	-fx-background-color: gold;
+	-fx-background-image:url(../../tile_img/biome/kov_safari.jpg);
 }
 #Forest{
-	-fx-background-image: url(../../tile_img/kov_forest.jpg);
+	-fx-background-image: url(../../tile_img/biome/kov_forest.jpg);
 }
 #Jungle{
-	-fx-background-color: darkgreen;
+	-fx-background-image:url(../../tile_img/biome/kov_jungle.jpg);
 }
 #Taiga{
-	-fx-background-color: #B6D9CA;
+	-fx-background-image:url(../../tile_img/biome/kov_taiga.jpg);
 }
 #Tundra{
-	-fx-background-color:aliceblue;
+	-fx-background-image:url(../../tile_img/biome/kov_tundra.jpg);
 }
 #Swamp{
-	-fx-background-image: url(../..//tile_img/kov_swamp.jpg);
+	-fx-background-image: url(../..//tile_img/biome/kov_swamp.jpg);
 }
 #River{
-	-fx-background-color:deepskyblue;
+	-fx-background-image:url(../../tile_img/biome/kov_river.jpg);
 }
 #Lake{
-	-fx-background-color:cornflowerblue;
+	-fx-background-image:url(../../tile_img/biome/kov_lake.jpg);
 }
 #Sea{
-	-fx-background-color: #4661B3;
+	-fx-background-image:url(../../tile_img/biome/kov_sea.jpg);
 }
 #Desert{
-	-fx-background-image:url(../../tile_img/kov_desert.jpg);
+	-fx-background-image:url(../../tile_img/biome/kov_desert.jpg);
 }
 #Snow{
 	-fx-background-color: white;
