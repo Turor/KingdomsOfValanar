@@ -6,7 +6,7 @@
 }
 
 #Mountains{
-	-fx-background-color:saddlebrown;
+	-fx-background-image:url(../../tile_img/kov_mountain.jpg);
 }
 #Hills{
 	-fx-background-color:peru;
@@ -18,7 +18,7 @@
 	-fx-background-color: gold;
 }
 #Forest{
-	-fx-background-color: forestgreen;
+	-fx-background-image: url(../../tile_img/kov_forest.jpg);
 }
 #Jungle{
 	-fx-background-color: darkgreen;
@@ -30,7 +30,7 @@
 	-fx-background-color:aliceblue;
 }
 #Swamp{
-	-fx-background-color: #1C4A36;
+	-fx-background-image: url(../..//tile_img/kov_swamp.jpg);
 }
 #River{
 	-fx-background-color:deepskyblue;
@@ -42,7 +42,7 @@
 	-fx-background-color: #4661B3;
 }
 #Desert{
-	-fx-background-color:#E6E3D1;
+	-fx-background-image:url(../../tile_img/kov_desert.jpg);
 }
 #Snow{
 	-fx-background-color: white;
