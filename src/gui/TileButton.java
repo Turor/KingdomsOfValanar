@@ -16,8 +16,8 @@ public class TileButton extends Label implements PropertyChangeListener {
 	private Tile tile;
 
 	public TileButton(Tile t) {
-		this.setMinSize(100, 100);
-		this.setMaxSize(100, 100);
+		this.setMinSize(32, 32);
+		this.setMaxSize(32, 32);
 		this.getStyleClass().add("terrain");
 		this.tile = t;
 		
