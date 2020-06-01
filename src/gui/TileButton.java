@@ -26,7 +26,7 @@ public class TileButton extends Label implements PropertyChangeListener {
 	public void update() {
 		//this.setText(terrain.toString());
 		this.setId(terrain.toString());
-		this.setText(tile.getOperatorName());
+		//this.setText(tile.getOperatorName());
 		this.applyCss();
 	}
 	
