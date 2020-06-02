@@ -44,6 +44,7 @@ public class TileTest extends Application {
 			}
 		}
 		
+		
 		scr.setContent(grid);
 		
 		scr.setPannable(true);
