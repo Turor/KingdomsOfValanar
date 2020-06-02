@@ -4,7 +4,9 @@ import entities.Kingdom;
 import entities.Tile;
 import gui.TileButton;
 import javafx.application.Application;
+import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -36,22 +38,24 @@ public class TileTest extends Application {
 		for(int row = 0; row < tiles.length;row++) {
 			board[row] = new TileButton[tiles[row].length]; 
 			for(int col = 0; col < tiles[row].length;col++) {
-				board[row][col] = new TileButton(tiles[row][col]);
+				board[row][col] = new TileButton(tiles[row][col],row);
 				tiles[row][col].registerGraphicsListener(board[row][col]);
 				grid.add(board[row][col], col, row);
 			}
 		}
 		
 		scr.setContent(grid);
-		scr.setMinViewportHeight(100);
+		
 		scr.setPannable(true);
 		
 		
 		stage.setScene(scene);
-		stage.setFullScreen(true);
-		stage.show();
 		
-
-
+		stage.show();
+	}
+	
+	private void scale(GridPane grid, double factor) {
+		grid.setScaleX(factor);
+		grid.setScaleY(factor);
 	}
 }
